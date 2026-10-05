@@ -1,7 +1,8 @@
 import os
+import logging
 from datetime import datetime
 import pytz
-from telegram import Update
+from telegram import Update, LabeledPrice
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
@@ -9,6 +10,12 @@ from telegram.ext import (
     PreCheckoutQueryHandler,
     MessageHandler,
     filters,
+)
+
+# Enable logging for easier debugging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
 )
 
 # Aapka Telegram Bot Token
@@ -28,13 +35,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         amount = int(context.args[0])
 
     try:
+        # Telegram API expects LabeledPrice objects in the prices array
         invoice_link = await context.bot.create_invoice_link(
             title="Star Purchase",
             description=f"Payment for {amount} Stars",
             payload=f"stars-payload-{amount}",
-            provider_token="",  # Telegram Stars ke liye empty rakhein
+            provider_token="",  # Empty for Telegram Stars
             currency="XTR",
-            prices=[{"label": "Stars", "amount": amount}]
+            prices=[LabeledPrice(label="Stars", amount=amount)]
         )
         await update.message.reply_text(f"Here is your payment link:\n{invoice_link}")
     except Exception as e:
