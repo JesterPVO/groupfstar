@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 
 # Aapka Telegram Bot Token
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8608163715:AAEmN61QY_yxdF9JXHOCUC4LKeb71y5-tiQ")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8608163715:AAFgOwv_i2NAkoEwfa4fb-v1NcGU0sz4PoQ")
 
 # Users aur transactions data store karne ke liye
 user_stars_db = {}
